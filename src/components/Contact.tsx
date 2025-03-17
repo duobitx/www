@@ -16,13 +16,19 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 
 const ContactSection = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(4, 0),
+  padding: theme.spacing(8, 0),
   backgroundColor: theme.palette.background.default,
 }));
 
 const ContactCard = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(3),
-  marginBottom: theme.spacing(4),
+  padding: theme.spacing(4),
+  height: '100%',
+  backgroundColor: theme.palette.background.paper,
+  border: '1px solid rgba(0, 0, 0, 0.05)',
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    boxShadow: '0 12px 24px -8px rgba(0, 0, 0, 0.15)',
+  },
 }));
 
 const ContactInfo = styled(Box)(({ theme }) => ({
@@ -32,6 +38,11 @@ const ContactInfo = styled(Box)(({ theme }) => ({
   padding: theme.spacing(4),
   backgroundColor: theme.palette.background.paper,
   borderRadius: theme.shape.borderRadius,
+  border: '1px solid rgba(0, 0, 0, 0.05)',
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    boxShadow: '0 12px 24px -8px rgba(0, 0, 0, 0.15)',
+  },
 }));
 
 const ContactMethod = styled(Box)(({ theme }) => ({
@@ -42,17 +53,17 @@ const ContactMethod = styled(Box)(({ theme }) => ({
 }));
 
 const IconWrapper = styled(Box)(({ theme }) => ({
-  width: 60,
-  height: 60,
-  borderRadius: '50%',
-  backgroundColor: '#000',
+  width: 48,
+  height: 48,
+  borderRadius: '12px',
+  background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   marginBottom: theme.spacing(2),
   '& svg': {
-    fontSize: 30,
-    color: '#fff',
+    fontSize: 24,
+    color: theme.palette.common.white,
   },
 }));
 
@@ -62,13 +73,31 @@ const ContactForm = styled('form')(({ theme }) => ({
   gap: theme.spacing(3),
 }));
 
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  '& .MuiOutlinedInput-root': {
+    borderRadius: theme.shape.borderRadius,
+    transition: 'all 0.2s ease-in-out',
+    '&:hover': {
+      '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: theme.palette.primary.main,
+      },
+    },
+  },
+}));
+
 const SubmitButton = styled(Button)(({ theme }) => ({
-  backgroundColor: '#000',
-  color: '#fff',
-  padding: theme.spacing(1.5),
-  borderRadius: 50,
+  padding: theme.spacing(1.5, 3),
+  borderRadius: '100px',
+  textTransform: 'none',
+  fontSize: '1.125rem',
+  fontWeight: 600,
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.common.white,
+  transition: 'all 0.2s ease-in-out',
   '&:hover': {
-    backgroundColor: '#333',
+    backgroundColor: theme.palette.primary.dark,
+    transform: 'translateY(-4px)',
+    boxShadow: '0 20px 40px -12px rgba(0, 0, 0, 0.1)',
   },
 }));
 
@@ -108,13 +137,25 @@ const Contact: React.FC = () => {
 
   return (
     <ContactSection id="contact">
-      <Container>
+      <Container maxWidth="lg">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
         >
+          <Typography variant="h1" gutterBottom align="center">
+            Get in Touch
+          </Typography>
+          <Typography 
+            variant="h5" 
+            color="text.secondary" 
+            align="center" 
+            sx={{ mb: 8, maxWidth: '800px', mx: 'auto' }}
+          >
+            Have a question or want to work together? We'd love to hear from you.
+            Reach out to us using any of the methods below.
+          </Typography>
+
           <Grid container spacing={4}>
             <Grid item xs={12} md={4}>
               <ContactInfo>
@@ -122,7 +163,7 @@ const Contact: React.FC = () => {
                   <IconWrapper>
                     <EmailIcon />
                   </IconWrapper>
-                  <Typography variant="h6" gutterBottom>
+                  <Typography variant="h4" gutterBottom>
                     Email
                   </Typography>
                   <Typography variant="body1" color="text.secondary">
@@ -133,7 +174,7 @@ const Contact: React.FC = () => {
                   <IconWrapper>
                     <PhoneIcon />
                   </IconWrapper>
-                  <Typography variant="h6" gutterBottom>
+                  <Typography variant="h4" gutterBottom>
                     Phone
                   </Typography>
                   <Typography variant="body1" color="text.secondary">
@@ -144,33 +185,33 @@ const Contact: React.FC = () => {
             </Grid>
             <Grid item xs={12} md={8}>
               <ContactCard>
-                <Typography variant="h4" gutterBottom>
+                <Typography variant="h4" gutterBottom color="primary">
                   Send us a Message
                 </Typography>
                 <ContactForm onSubmit={handleSubmit}>
-                  <TextField
+                  <StyledTextField
                     required
                     fullWidth
-                    label="Name *"
+                    label="Name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     variant="outlined"
                   />
-                  <TextField
+                  <StyledTextField
                     required
                     fullWidth
-                    label="Email *"
+                    label="Email"
                     name="email"
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
                     variant="outlined"
                   />
-                  <TextField
+                  <StyledTextField
                     required
                     fullWidth
-                    label="Message *"
+                    label="Message"
                     name="message"
                     multiline
                     rows={6}

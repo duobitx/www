@@ -1,13 +1,13 @@
 import React from 'react';
-import Services from '../components/Services';
+import Team from '../components/Team';
 import { Box } from '@mui/material';
 
-const ServicesPage: React.FC = () => {
+const TeamPage: React.FC = () => {
   return (
     <Box component="main" sx={{ backgroundColor: 'background.default', minHeight: '100vh' }}>
-      <Services />
+      <Team />
     </Box>
   );
 };
 
-export default ServicesPage; 
+export default TeamPage; 
