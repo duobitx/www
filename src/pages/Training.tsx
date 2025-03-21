@@ -15,7 +15,7 @@ import CircleIcon from '@mui/icons-material/Circle';
 const SectionHeader = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'left',
   gap: theme.spacing(2),
   marginBottom: theme.spacing(2),
   '& .section-icon': {
@@ -55,6 +55,7 @@ const CardIcon = styled(Box)(({ theme }) => ({
 interface TrainingSectionProps {
   title: string;
   description: string;
+  features: string[];
   trainings: any[];
   duration: string;
   icon: typeof SvgIcon;
@@ -63,9 +64,21 @@ interface TrainingSectionProps {
 const Training: React.FC = () => {
   const navigate = useNavigate();
 
-  const commonFeatures = [
-    'Live demo with real-world examples',
+  const rapidFeatures = [
+    'Live demo with a real-world example',
+    'Peer programming session',
     'Sample code and documentation',
+    'Future learning resources and recommendations',
+  ];
+
+  const blitzFeatures = [
+    'Live demo with a real-world example',
+    'Sample code and documentation',
+    'Future learning resources and recommendations',
+  ];
+
+  const bulletFeatures = [
+    'Live demo with a real-world examples',
     'Future learning resources and recommendations',
   ];
 
@@ -78,7 +91,7 @@ const Training: React.FC = () => {
     },
     {
       title: 'Postgres for DBAs',
-      description: 'This training covers PostgreSQL administration.',
+      description: 'This training covers PostgreSQL server administration.',
       icon: <StorageIcon />,
       path: '/training/rapid/postgres-for-dbas',
     },
@@ -150,30 +163,38 @@ const Training: React.FC = () => {
     },
   ];
 
-  const TrainingSection = ({ title, description, trainings, duration, icon: Icon }: TrainingSectionProps) => (
+  const TrainingSection = ({ title, description, features, trainings, duration, icon: Icon }: TrainingSectionProps) => (
     <Box sx={{ mb: 8 }}>
       <SectionHeader>
         <Icon className="section-icon" />
-        <Typography variant="h2" align="center">
+        <Typography variant="h2" align="left">
           {title}
         </Typography>
       </SectionHeader>
-      <Typography 
-        variant="h6" 
-        color="text.secondary" 
-        align="center" 
+      <Typography
+        variant="h6"
+        align="left"
+        color="text.secondary"
         sx={{ mb: 4, maxWidth: '800px', mx: 'auto' }}
       >
         {description}
       </Typography>
-      <Typography 
-        variant="subtitle1" 
-        color="primary" 
-        align="center" 
+      <Box sx={{ mb: 2 }}>
+        {features.map((feature, idx) => (
+          <Typography key={idx} variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+            • {feature}
+          </Typography>
+        ))}
+      </Box>
+      <Typography
+        variant="subtitle1"
+        color="primary"
+        align="left"
         sx={{ mb: 4, fontWeight: 'bold' }}
       >
         Duration: {duration}
       </Typography>
+
       <Grid container spacing={4}>
         {trainings.map((training, index) => (
           <Grid item xs={12} md={6} key={training.title}>
@@ -188,13 +209,6 @@ const Training: React.FC = () => {
                 <Typography variant="body1" color="text.secondary" paragraph>
                   {training.description}
                 </Typography>
-                <Box sx={{ mb: 2 }}>
-                  {commonFeatures.map((feature, idx) => (
-                    <Typography key={idx} variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                      • {feature}
-                    </Typography>
-                  ))}
-                </Box>
                 <Button
                   variant="contained"
                   size="large"
@@ -223,59 +237,65 @@ const Training: React.FC = () => {
           <Typography variant="h1" gutterBottom align="center">
             DuoBit Trainings
           </Typography>
-          
-          <Typography 
-            variant="h5" 
-            color="text.secondary" 
-            align="center" 
+
+          {/* this is probably not needed, also the style is kind of LLM bullshit we don't want. */}
+          {/* <Typography
+            variant="h5"
+            color="text.secondary"
+            align="center"
             sx={{ mb: 8, maxWidth: '800px', mx: 'auto' }}
           >
-            Enhance your team's expertise with our specialized training programs, 
+            Enhance your team's expertise with our specialized training programs,
             designed to deliver practical knowledge and hands-on experience.
-          </Typography>
+          </Typography> */}
 
-          <TrainingSection 
+          <TrainingSection
             title="Rapid"
-            description="Intensive journey into specific technology, product or solution. Includes hands-on demos of essential features."
+            description="Intensive journeys into specific technology, product or solution. Include hands-on demos of essential features."
+            features={rapidFeatures}
             trainings={rapidTrainings}
             duration="4 hours"
             icon={PetsIcon}
           />
 
-          <TrainingSection 
+          <TrainingSection
             title="Blitz"
             description="Focused training session for quick skill acquisition. Covers a single subsystem or component."
+            features={blitzFeatures}
             trainings={blitzTrainings}
             duration="2 hours"
             icon={ElectricBoltIcon}
           />
 
-          <TrainingSection 
+          <TrainingSection
             title="Bullet"
-            description="Flash course focused on a single aspect or feature."
+            description="Flash training focused on a single aspect or feature."
+            features={bulletFeatures}
             trainings={bulletTrainings}
             duration="1 hour"
             icon={CircleIcon}
           />
 
-          <Paper 
-            elevation={3} 
-            sx={{ 
-              p: 4, 
-              mt: 8, 
+          <Paper
+            elevation={3}
+            sx={{
+              p: 4,
+              mt: 8,
               textAlign: 'center',
               background: 'linear-gradient(135deg, rgba(25, 118, 210, 0.1), rgba(25, 118, 210, 0.05))'
             }}
           >
             <Typography variant="h3" gutterBottom>
-              We fit Your Advancement
+              We Fit Your Advancement
             </Typography>
             <Typography variant="h6" color="text.secondary" paragraph>
-              Are you a <code style={{ background: '#f5f5f5', padding: '2px 6px', borderRadius: '4px' }}>n00b</code> or a{' '}
-              <code style={{ background: '#f5f5f5', padding: '2px 6px', borderRadius: '4px' }}>webd3vil</code>?
+              Are you a <code style={{ background: '#f5f5f5', padding: '2px 6px', borderRadius: '4px' }}>n00b</code>
+              or a <code style={{ background: '#f5f5f5', padding: '2px 6px', borderRadius: '4px' }}>webd3vil</code>?
             </Typography>
             <Typography variant="body1" sx={{ maxWidth: '800px', mx: 'auto' }}>
-              We deliver above trainings in three variants, customized for different audience: Beginner, PowerUser and Architect. Relevant experience is a prerequisite.
+              We deliver above trainings in three variants, customized for different audience: Beginner, Power User and Architect.
+              Relevant experience is a prerequisite.
+              Please use Contact page to learn more.
             </Typography>
           </Paper>
         </motion.div>
@@ -284,4 +304,4 @@ const Training: React.FC = () => {
   );
 };
 
-export default Training; 
+export default Training;
