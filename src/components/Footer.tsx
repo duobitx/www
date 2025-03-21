@@ -20,11 +20,11 @@ const Footer: React.FC = () => {
             fontWeight: 500,
           }}
         >
-          © {new Date().getFullYear()} Your Company Name. All rights reserved.
+          © {new Date().getFullYear()} DuoBit
         </Typography>
       </Container>
     </Box>
   );
 };
 
-export default Footer; 
+export default Footer;
