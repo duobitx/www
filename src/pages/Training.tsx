@@ -14,8 +14,8 @@ import CircleIcon from '@mui/icons-material/Circle';
 
 const SectionHeader = styled(Box)(({ theme }) => ({
   display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'left',
+  alignItems: 'flex-start',
+  justifyContent: 'flex-start',
   gap: theme.spacing(2),
   marginBottom: theme.spacing(2),
   '& .section-icon': {
@@ -85,7 +85,7 @@ const Training: React.FC = () => {
   const rapidTrainings = [
     {
       title: 'Postgres for Developers',
-      description: 'What a good software developer should know about PostgreSQL.',
+      description: 'What every software developer should know about PostgreSQL.',
       icon: <StorageIcon />,
       path: '/training/rapid/postgres-for-developers',
     },
@@ -175,7 +175,7 @@ const Training: React.FC = () => {
         variant="h6"
         align="left"
         color="text.secondary"
-        sx={{ mb: 4, maxWidth: '800px', mx: 'auto' }}
+        sx={{ mb: 4, maxWidth: '800px' }}
       >
         {description}
       </Typography>
@@ -251,7 +251,7 @@ const Training: React.FC = () => {
 
           <TrainingSection
             title="Rapid"
-            description="Intensive journeys into specific technology, product or solution. Include hands-on demos of essential features."
+            description="Intensive journey into a technology, product or solution. Includes hands-on demos of essential features."
             features={rapidFeatures}
             trainings={rapidTrainings}
             duration="4 hours"
