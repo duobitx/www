@@ -25,32 +25,37 @@ const SectionHeader = styled(Box)(({ theme }) => ({
   },
 }));
 
-const TrainingCard = styled(Card)(({ theme }) => ({
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  transition: 'all 0.3s ease-in-out',
-  padding: theme.spacing(4),
-  '&:hover': {
-    transform: 'translateY(-8px)',
-    boxShadow: '0 20px 40px -12px rgba(0, 0, 0, 0.1)',
-  },
-}));
+interface TrainingCardProps {
+  cardSize: 'large' | 'medium' | 'small';
+}
 
-const CardIcon = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '64px',
-  height: '64px',
-  borderRadius: '16px',
-  marginBottom: theme.spacing(2),
-  background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-  color: '#fff',
-  '& .MuiSvgIcon-root': {
-    fontSize: '32px',
-  },
-}));
+const TrainingCard = styled(Card)<TrainingCardProps>(({ theme, cardSize }) => {
+  let padding, minHeight;
+  if (cardSize === 'large') {
+    padding = theme.spacing(4);
+    minHeight = 300;
+  } else if (cardSize === 'medium') {
+    padding = theme.spacing(3);
+    minHeight = 250;
+  } else { // small
+    padding = theme.spacing(2);
+    minHeight = 200;
+  }
+  return {
+    position: 'relative',
+    overflow: 'hidden',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    transition: 'all 0.3s ease-in-out',
+    padding: padding,
+    minHeight: minHeight,
+    '&:hover': {
+      transform: 'translateY(-8px)',
+      boxShadow: '0 20px 40px -12px rgba(0, 0, 0, 0.1)',
+    },
+  };
+});
 
 interface TrainingSectionProps {
   title: string;
@@ -59,6 +64,7 @@ interface TrainingSectionProps {
   trainings: any[];
   duration: string;
   icon: typeof SvgIcon;
+  trainingCardSize: 'large' | 'medium' | 'small';
 }
 
 const Training: React.FC = () => {
@@ -78,7 +84,7 @@ const Training: React.FC = () => {
   ];
 
   const bulletFeatures = [
-    'Live demo with a real-world examples',
+    'Live demo with real-world examples',
     'Future learning resources and recommendations',
   ];
 
@@ -163,68 +169,94 @@ const Training: React.FC = () => {
     },
   ];
 
-  const TrainingSection = ({ title, description, features, trainings, duration, icon: Icon }: TrainingSectionProps) => (
-    <Box sx={{ mb: 8 }}>
-      <SectionHeader>
-        <Icon className="section-icon" />
-        <Typography variant="h2" align="left">
-          {title}
-        </Typography>
-      </SectionHeader>
-      <Typography
-        variant="h6"
-        align="left"
-        color="text.secondary"
-        sx={{ mb: 4, maxWidth: '800px' }}
+  const TrainingSection = ({ title, description, features, trainings, duration, icon: Icon, trainingCardSize }: TrainingSectionProps) => {
+    // Compute the background image path based on the section title
+    const bgImage = `/icon-${title.toLowerCase()}.png`;
+    return (
+      <Paper
+        sx={{
+          p: 4,
+          border: '1px solid',
+          borderColor: 'grey.300',
+          borderRadius: 2,
+          mb: 8,
+        }}
       >
-        {description}
-      </Typography>
-      <Box sx={{ mb: 2 }}>
-        {features.map((feature, idx) => (
-          <Typography key={idx} variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-            • {feature}
+        <SectionHeader>
+          <Icon className="section-icon" />
+          <Typography variant="h2">
+            {title}
           </Typography>
-        ))}
-      </Box>
-      <Typography
-        variant="subtitle1"
-        color="primary"
-        align="left"
-        sx={{ mb: 4, fontWeight: 'bold' }}
-      >
-        Duration: {duration}
-      </Typography>
+        </SectionHeader>
+        <Typography
+          variant="subtitle1"
+          color="text.secondary"
+          sx={{ mb: 4, maxWidth: '800px' }}
+        >
+          {description}
+        </Typography>
+        <Typography
+          variant="subtitle2"
+          color="primary"
+          sx={{ mb: 4, fontWeight: 'bold' }}
+        >
+          Duration: {duration}
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          {features.map((feature, idx) => (
+            <Typography key={idx} variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+              • {feature}
+            </Typography>
+          ))}
+        </Box>
 
-      <Grid container spacing={4}>
-        {trainings.map((training, index) => (
-          <Grid item xs={12} md={6} key={training.title}>
-            <TrainingCard>
-              <CardContent sx={{ flexGrow: 1, p: 0 }}>
-                <CardIcon>
-                  {training.icon}
-                </CardIcon>
-                <Typography variant="h4" gutterBottom>
-                  {training.title}
-                </Typography>
-                <Typography variant="body1" color="text.secondary" paragraph>
-                  {training.description}
-                </Typography>
-                <Button
-                  variant="contained"
-                  size="large"
-                  onClick={() => navigate(training.path)}
-                  sx={{ mt: 2 }}
-                >
-                  Learn More
-                </Button>
-              </CardContent>
-            </TrainingCard>
-          </Grid>
-        ))}
-      </Grid>
-      <Divider sx={{ my: 8 }} />
-    </Box>
-  );
+        <Grid container spacing={4}>
+          {trainings.map((training) => (
+            <Grid item xs={12} md={6} key={training.title}>
+              <TrainingCard cardSize={trainingCardSize}>
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundImage: `url(${bgImage})`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
+                    backgroundSize: 'contain',
+                    opacity: 0.1,
+                  }}
+                />
+                <CardContent sx={{ position: 'relative', zIndex: 1, flexGrow: 1, p: 0 }}>
+                  <Box sx={{ mb: 2 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '64px', height: '64px', borderRadius: '16px', mb: 2, background: `linear-gradient(135deg, theme.palette.primary.main, theme.palette.secondary.main)`, color: '#fff' }}>
+                      {training.icon}
+                    </Box>
+                  </Box>
+                  <Typography variant="h4" gutterBottom>
+                    {training.title}
+                  </Typography>
+                  <Typography variant="body1" color="text.secondary" paragraph>
+                    {training.description}
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    size="large"
+                    onClick={() => navigate(training.path)}
+                    sx={{ mt: 2 }}
+                  >
+                    Learn More
+                  </Button>
+                </CardContent>
+              </TrainingCard>
+            </Grid>
+          ))}
+        </Grid>
+        <Divider sx={{ my: 8 }} />
+      </Paper>
+    );
+  };
 
   return (
     <Box sx={{ py: 8, backgroundColor: 'background.default' }}>
@@ -238,24 +270,14 @@ const Training: React.FC = () => {
             DuoBit Trainings
           </Typography>
 
-          {/* this is probably not needed, also the style is kind of LLM bullshit we don't want. */}
-          {/* <Typography
-            variant="h5"
-            color="text.secondary"
-            align="center"
-            sx={{ mb: 8, maxWidth: '800px', mx: 'auto' }}
-          >
-            Enhance your team's expertise with our specialized training programs,
-            designed to deliver practical knowledge and hands-on experience.
-          </Typography> */}
-
           <TrainingSection
             title="Rapid"
-            description="Intensive journey into a technology, product or solution. Includes hands-on demos of essential features."
+            description="Intensive journey into a technology, product or solution."
             features={rapidFeatures}
             trainings={rapidTrainings}
             duration="4 hours"
             icon={PetsIcon}
+            trainingCardSize="large"
           />
 
           <TrainingSection
@@ -265,6 +287,7 @@ const Training: React.FC = () => {
             trainings={blitzTrainings}
             duration="2 hours"
             icon={ElectricBoltIcon}
+            trainingCardSize="medium"
           />
 
           <TrainingSection
@@ -274,6 +297,7 @@ const Training: React.FC = () => {
             trainings={bulletTrainings}
             duration="1 hour"
             icon={CircleIcon}
+            trainingCardSize="small"
           />
 
           <Paper
