@@ -47,24 +47,25 @@ const TeamMember: React.FC = () => {
 
   // This would typically come from an API or database
   const teamMembers = {
-    'john-doe': {
-      name: 'John Doe',
-      role: 'Senior Software Architect',
-      image: 'https://media.licdn.com/dms/image/profile1.jpg',
-      linkedIn: 'https://linkedin.com/in/johndoe',
-      email: 'john.doe@duobit.io',
-      bio: 'John is a seasoned software architect with over 15 years of experience in designing and implementing large-scale distributed systems. He specializes in cloud-native architectures and microservices.',
+    'marek-gruszecki': {
+      name: 'Marek Gruszecki',
+      role: 'Software Architect',
+      image: 'https://media.licdn.com/dms/image/v2/D4D03AQFClhLJqQHFbg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1710503308881?e=1753920000&v=beta&t=wjbGhIDHpqsdTGv5AGlufRaeoOkgQDBl-7oFkzEUNq8',
+      linkedIn: 'https://linkedin.com/in/gruszecm',
+      email: 'marek.gruszecki@duobit.pl',
+      bio: 'Experienced Software Architect with over 20 years of delivering high-quality software solutions. Proven expertise in designing complex and mission-critical systems.',
       expertise: [
         'Cloud Architecture',
         'Microservices',
         'Distributed Systems',
         'System Design',
+	'Low Latency Software',
         'Technical Leadership',
       ],
       projects: [
-        'Led the migration of a monolithic application to microservices architecture',
-        'Designed and implemented a real-time data processing pipeline',
-        'Architected a multi-region cloud infrastructure for high availability',
+        'Finance and insurance software',
+        'eComerce solutions',
+        'High load and low latency systems',
       ],
     },
     'wojciech-marzec': {

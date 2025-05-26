@@ -67,11 +67,11 @@ const Team: React.FC = () => {
 
   const teamMembers = [
     {
-      id: 'john-doe',
-      name: 'John Doe',
-      role: 'Senior Software Architect',
-      image: 'https://media.licdn.com/dms/image/profile1.jpg',
-      linkedIn: 'https://linkedin.com/in/johndoe',
+      id: 'marek-gruszecki',
+      name: 'Marek Gruszecki',
+      role: 'Software Architect',
+      image: 'https://media.licdn.com/dms/image/v2/D4D03AQFClhLJqQHFbg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1710503308881?e=1753920000&v=beta&t=wjbGhIDHpqsdTGv5AGlufRaeoOkgQDBl-7oFkzEUNq8',
+      linkedIn: 'https://linkedin.com/in/gruszecm',
     },
     {
       id: 'jane-smith',
